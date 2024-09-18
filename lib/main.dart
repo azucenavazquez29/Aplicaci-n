@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
+Future<void> _launchURL(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'No se pudo abrir $url';
+  }
+}
   // Este es el contenido en el proyecto para la vista en un nuevo proyecto en pantalla en el programa .
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Profile',
       home: Scaffold(
         appBar: AppBar(
@@ -108,7 +119,7 @@ class MyApp extends StatelessWidget {
                       color: const Color.fromARGB(255, 175, 100, 153),
                       child: ListTile(
                         title: Text(
-                          'Solo se puede visualizar pero puro texto con los datos',
+                          'Solo se puede visualizar pero puro texto con los datos al momento dar click te aroja en solicitud',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -142,11 +153,16 @@ class MyApp extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    subtitle: Text(
-                      'Azucena29.laraa@gmail.com',
+  // El Inkwell es un widget que se define para manejar los toques 
+                    subtitle: InkWell(
+                      child: Text( 'Azucena29.laraa@gmail.com',
                       style: TextStyle(
                         fontSize: 18,
+                        color: Colors.pinkAccent,
+                        decoration: TextDecoration.underline, 
                       ),
+                      ),
+                    onTap: () => _launchURL('mailto:Azucena29.laraa@gmail.com'),
                     ),
                   ),
                   Divider(),
@@ -159,11 +175,15 @@ class MyApp extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    subtitle: Text(
-                       'https://github.com/azucenavazquez29',
-                      style: TextStyle(
+                    subtitle: InkWell(
+                      child: Text( " https://github.com/azucenavazquez29",                  
+                    style: TextStyle(
                         fontSize: 18,
+                        color: Colors.pinkAccent,
+                        decoration: TextDecoration.underline,
                       ),
+                    ),
+                     onTap: () => _launchURL("https://github.com/azucenavazquez29"),
                     ),
                   ),
 // El divider es un widget que se divide en vertical las columnas 
@@ -172,17 +192,21 @@ class MyApp extends StatelessWidget {
                     title: Text(
                       'Facebook',
                       style: TextStyle(
-                        color: Colors.deepOrange,
+                        color: const Color.fromARGB(255, 199, 156, 181),
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    subtitle: Text(
-                      'https://www.facebook.com/profile.php?id=100010114720293',
+                    subtitle: InkWell(
+                      child: Text( 'https://www.facebook.com/profile.php?id=100010114720293', 
                       style: TextStyle(
                         fontSize: 18,
+                         color: Colors.pinkAccent,
+                        decoration: TextDecoration.underline,
                       ),
                     ),
+                   onTap: () => _launchURL('https://www.facebook.com/profile.php?id=100010114720293'),
+                  ),
                   ),
                 ],
               ),
@@ -193,6 +217,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-
